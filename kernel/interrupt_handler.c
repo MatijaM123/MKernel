@@ -11,19 +11,25 @@ int register_irq_handler(int irq_num, KBP* handler_proc) {
 }
 
 void handle_interrupt(int irq_num) {
-    KBP* handler = irq_handlers[irq_num];
-    if (!handler) return;
+    if (irq_num == 0) {
+        increment_ticks();
+        scheduler_tick(); // planiraj novi proces
+    } else {
+        KBP* handler = irq_handlers[irq_num];
+        if (!handler) return;
 
-    Message msg = {
-        .sender_pid = -1,
-        .receiver_pid = handler->pid,
-        .is_reply = 0,
-        .reply_expected = 0,
-    };
-    strncpy(msg.data, "INTERRUPT", MAX_MSG_DATA);
+        Message msg = {
+            .sender_pid = -1,
+            .receiver_pid = handler->pid,
+            .is_reply = 0,
+            .reply_expected = 0,
+        };
+        strncpy(msg.data, "INTERRUPT", MAX_MSG_DATA);
+        enqueue_message(&handler->msg_queue, &msg);
+        scheduler_unblock_all_on(WAIT_DEVICE, irq_num);
+    }
 
-    enqueue_message(&handler->msg_queue, &msg);
-    scheduler_unblock_all_on(WAIT_DEVICE, irq_num);
+    pic_send_eoi(irq_num);
 }
 
 
