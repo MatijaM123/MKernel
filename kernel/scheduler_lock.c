@@ -37,7 +37,7 @@ void spinlock_acquire_irqsave(spinlock_t* lock, uint64_t* flags) {
     *flags = read_flags();
     cli();
     while (xchg8(&lock->locked, 1)) {
-        while (lock->locked); // spin wait
+        while (lock->locked); 
     }
 }
 

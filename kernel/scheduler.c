@@ -133,7 +133,7 @@ void scheduler_tick() {
     if (prev && prev->state == PROCESS_RUNNING) {
         prev->state = PROCESS_READY;
         prev->next = NULL;
-        scheduler_add(prev); // reentrant – safe zbog spinlocka
+        scheduler_add(prev); // sigurno zbog spinlocka
     }
 
     current_process->state = PROCESS_RUNNING;

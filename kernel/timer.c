@@ -8,10 +8,10 @@
 void timer_init(uint32_t freq_hz) {
     uint16_t divisor = (uint16_t)(PIT_FREQUENCY / freq_hz);
 
-    outb(PIT_COMMAND, 0x36); // Binary mode, mode 3 (square wave), channel 0
+    outb(PIT_COMMAND, 0x36); 
 
-    outb(PIT_CHANNEL0, divisor & 0xFF);       // low byte
-    outb(PIT_CHANNEL0, (divisor >> 8) & 0xFF); // high byte
+    outb(PIT_CHANNEL0, divisor & 0xFF);  
+    outb(PIT_CHANNEL0, (divisor >> 8) & 0xFF); 
 }
 
 

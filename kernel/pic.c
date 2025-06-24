@@ -10,10 +10,10 @@ void pic_remap() {
     uint8_t a1 = inb(PIC1_DATA);
     uint8_t a2 = inb(PIC2_DATA);
 
-    outb(PIC1_COMMAND, 0x11); // init
+    outb(PIC1_COMMAND, 0x11); 
     outb(PIC2_COMMAND, 0x11);
-    outb(PIC1_DATA, 0x20); // offset 0x20 (INT 32)
-    outb(PIC2_DATA, 0x28); // offset 0x28 (INT 40)
+    outb(PIC1_DATA, 0x20); // ofset 0x20 (INT 32)
+    outb(PIC2_DATA, 0x28); // ofset 0x28 (INT 40)
     outb(PIC1_DATA, 0x04);
     outb(PIC2_DATA, 0x02);
     outb(PIC1_DATA, 0x01);
